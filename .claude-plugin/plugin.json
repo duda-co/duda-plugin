@@ -1,0 +1,8 @@
+{
+  "name": "duda",
+  "version": "0.1.0",
+  "description": "Build and manage Duda websites from Claude — sites, collections, content, blog, ecommerce, accounts, and marketing.",
+  "author": { "name": "Duda" },
+  "logo": "assets/logo.svg",
+  "keywords": ["duda", "website-builder", "cms", "agency", "mcp"]
+}
