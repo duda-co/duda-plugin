@@ -4,7 +4,7 @@ Build and manage Duda websites from Claude — sites, collections, content, blog
 
 ## Install
 
-- `/plugin marketplace add duda-co/duda-mcp-plugin`
+- `/plugin marketplace add duda-co/duda-plugin`
 - `/plugin install duda@duda`
 
 Or, once listed in the community directory:
