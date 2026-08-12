@@ -1,0 +1,15 @@
+{
+  "name": "duda",
+  "description": "Duda's official Claude plugins for building and managing websites via the Duda MCP server.",
+  "owner": {
+    "name": "Duda",
+    "url": "https://www.duda.co"
+  },
+  "plugins": [
+    {
+      "name": "duda",
+      "source": "./",
+      "description": "Build and manage Duda websites from Claude — sites, collections, content, blog, ecommerce, accounts, and marketing."
+    }
+  ]
+}
