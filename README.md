@@ -17,8 +17,8 @@ Or, once listed in the community directory:
 Loaded automatically when relevant to the conversation.
 
 - **`setup`** — connects the Duda connector if it isn't already authorized, and helps locate account/site identifiers.
-- **`create-site`** — create a new site from a template.
 - **`manage-collections`** — view, create, and update dynamic content collections (Team Members, Menu Items, Service Listings, etc.).
+- **`bulk-collections-import`** — load a spreadsheet, CSV, or list of repeated entries into a collection without duplicating rows on a re-run.
 - **`content-library`** — update shared/global site content (business info, hours, contact details) from client notes.
 - **`blog-workflow`** — draft, edit, publish, unpublish, and delete blog posts; enable a blog on a new site.
 - **`client-accounts`** — agency operations: create client accounts, grant/revoke site access, manage permissions, generate SSO/reset links.
@@ -26,7 +26,6 @@ Loaded automatically when relevant to the conversation.
 ### Commands
 Explicit, user-invoked shortcuts.
 
-- **`/duda:new-site`** — create a site from a template.
 - **`/duda:publish`** — publish or unpublish a site.
 - **`/duda:update-collection`** — add/update/review collection rows.
 - **`/duda:blog`** — draft or publish a blog post.
