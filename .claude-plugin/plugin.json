@@ -1,6 +1,6 @@
 {
   "name": "duda",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Build and manage Duda websites from Claude — sites, collections, content, blog, ecommerce, accounts, and marketing.",
   "author": { "name": "Duda" },
   "logo": "assets/logo.svg",
