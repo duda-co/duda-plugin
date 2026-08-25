@@ -14,7 +14,16 @@ description: Use when the user wants to view, create, or update a Duda site's dy
 
 ## Tools
 
-`get_collections` · `create_collection` · `create_collection_fields` · `create_collection_rows` · `update_collection_field` · `update_collection_rows` · `delete_collection_field` · `delete_collection_rows`
+`get_collections` · `create_collection` · `create_collection_fields` · `create_collection_rows` · `update_collection_field` · `update_collection_rows` · `delete_collection_field` · `delete_collection_rows` · `get_site_details`
+
+## Constraints
+
+- No tool creates a dynamic page or connects a page to a collection — do not
+  attempt either, or describe them as available.
+- This can only be done in the Duda editor. Give them the editor URL from
+  `get_site_details` plus the steps: Pages → select the page → turn into a
+  dynamic page. Do not invent another path.
+- Do not suggest re-creating the collection in order to bind it.
 
 ## Instructions
 
