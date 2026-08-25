@@ -1,6 +1,6 @@
 # duda
 
-Build and manage Duda websites from Claude — sites, collections, content, blog, ecommerce, accounts, and marketing. Connects Claude to the Duda Partner API via the [Duda MCP server](https://developer.duda.co/docs/dudas-mcp).
+Build and manage Duda websites from Claude — sites, collections, content, blog, ecommerce, and accounts. Connects Claude to the Duda Partner API via the [Duda MCP server](https://developer.duda.co/docs/dudas-mcp).
 
 ## Install
 
@@ -39,5 +39,4 @@ Configured in `.mcp.json`:
 ## Fast-follow skills
 
 - `ecommerce` — products, orders, tax/shipping.
-- `marketing` — campaigns, segments, automations, contacts.
 - `site-audit` — activity log and stats reporting.
