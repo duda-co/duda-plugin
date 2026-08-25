@@ -12,4 +12,6 @@ description: Add, update, or review rows in a Duda site's content collection (e.
 
 Use the `manage-collections` skill for the full procedure: resolve the site, call `get_collections` to confirm the existing schema before writing anything, then map the requested changes onto the existing fields with `create_collection_rows` / `update_collection_rows` / `delete_collection_rows` as appropriate.
 
+If the user is loading a spreadsheet, CSV, or long list of repeated entries rather than editing a few rows, use the `bulk-collections-import` skill instead — it maps columns onto fields and splits a re-import into creates vs updates so rows don't duplicate.
+
 Confirm with the user before any delete.

@@ -1,6 +1,6 @@
 ---
 name: manage-collections
-description: Use when the user wants to view, create, or update a Duda site's dynamic content collections (e.g. Team Members, Menu Items, Service Listings, Testimonials) — creating a collection and its fields, or adding/updating/deleting rows from a brief, notes, or a spreadsheet-like list.
+description: Use when the user wants to view, create, or update a Duda site's dynamic content collections (e.g. Team Members, Menu Items, Service Listings, Testimonials) — creating a collection and its fields, or adding/updating/deleting individual rows. For loading a spreadsheet, CSV, or long list of repeated entries in bulk, use `bulk-collections-import` instead.
 ---
 
 # Manage collections
