@@ -6,5 +6,6 @@
   "author": { "name": "Duda" },
   "homepage": "https://developer.duda.co/docs/dudas-mcp",
   "repository": "https://github.com/duda-co/duda-plugin",
+  "license": "MIT",
   "keywords": ["duda", "website-builder", "cms", "agency", "mcp"]
 }
