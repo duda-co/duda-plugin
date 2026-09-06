@@ -39,3 +39,23 @@ Configured in `.mcp.json`:
 
 - `ecommerce` — products, orders, tax/shipping.
 - `site-audit` — activity log and stats reporting.
+
+## Releases
+
+Versioning and the changelog are automated with
+[release-please](https://github.com/googleapis/release-please). Commit messages
+must follow [Conventional Commits](https://www.conventionalcommits.org/)
+(`type(scope)?: short description`) — the type decides the bump:
+
+| Commit | Bump |
+|---|---|
+| `fix: ...` | patch (0.1.0 → 0.1.1) |
+| `feat: ...` | minor (0.1.0 → 0.2.0) |
+| `feat!: ...` or `BREAKING CHANGE:` in the body | major (0.1.0 → 1.0.0) |
+| `docs:` / `refactor:` / `build:` / `revert:` | no bump; listed in the changelog |
+| `style:` / `test:` | no bump; hidden from the changelog |
+
+Pushing to `main` opens or updates a **release PR** that accumulates the pending
+changes. Nothing ships until that PR is merged — merging it bumps the version in
+`.claude-plugin/plugin.json` and `version.txt`, writes `CHANGELOG.md`, tags the
+commit, and publishes a GitHub Release.
