@@ -9,7 +9,8 @@
     {
       "name": "duda",
       "source": "./",
-      "description": "Build and manage Duda websites from Claude — sites, collections, content, blog, ecommerce, and accounts."
+      "description": "Build and manage Duda websites from Claude — sites, collections, content, blog, ecommerce, and accounts.",
+      "category": "website-building"
     }
   ]
 }
