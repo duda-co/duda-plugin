@@ -1,11 +1,19 @@
 {
   "name": "duda",
   "displayName": "Duda",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Build and manage Duda websites from Claude — sites, collections, content, blog, ecommerce, and accounts.",
-  "author": { "name": "Duda" },
+  "author": {
+    "name": "Duda"
+  },
   "homepage": "https://developer.duda.co/docs/dudas-mcp",
   "repository": "https://github.com/duda-co/duda-plugin",
   "license": "MIT",
-  "keywords": ["duda", "website-builder", "cms", "agency", "mcp"]
+  "keywords": [
+    "duda",
+    "website-builder",
+    "cms",
+    "agency",
+    "mcp"
+  ]
 }
