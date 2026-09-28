@@ -1,0 +1,21 @@
+# Code owners for the Duda plugin.
+#
+# Only paths listed here require a code-owner review. Files managed by
+# release-please (CHANGELOG.md, version.txt, .release-please-manifest.json and
+# the version field of .claude-plugin/plugin.json) are deliberately left
+# unowned so release PRs can merge without blocking on a review.
+
+# Everything customers actually load: skills, commands, and the MCP server config
+/skills/                            @duda-co/ai-infra @duda-co/vibe
+/commands/                          @duda-co/ai-infra @duda-co/vibe
+/.mcp.json                          @duda-co/ai-infra @duda-co/vibe
+
+# Marketplace listing + public-facing docs and assets
+/.claude-plugin/marketplace.json    @duda-co/ai-infra @duda-co/vibe
+/README.md                          @duda-co/ai-infra @duda-co/vibe
+/LICENSE                            @duda-co/ai-infra @duda-co/vibe
+/assets/                            @duda-co/ai-infra @duda-co/vibe
+
+# CI, release automation config, and this file itself
+/.github/                           @duda-co/ai-infra @duda-co/vibe
+/release-please-config.json         @duda-co/ai-infra @duda-co/vibe
