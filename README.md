@@ -1,6 +1,6 @@
 # duda
 
-Build and manage Duda websites from Claude — sites, collections, content, blog, ecommerce, and accounts. Connects Claude to the Duda Partner API via the [Duda MCP server](https://developer.duda.co/docs/dudas-mcp).
+Build and manage Duda projects from Claude. Duda Editor sites: pages, navigation, popups, theme, collections, content library, blog, ecommerce, bookings, marketing, and URL rules. Vibe projects (websites and apps): build and change them with Duda's AI agent, view form submissions, and publish. Client accounts and site access work for both. Connects Claude to the Duda Partner API via the [Duda MCP server](https://developer.duda.co/docs/dudas-mcp).
 
 ## Install
 
@@ -22,6 +22,7 @@ Loaded automatically when relevant to the conversation.
 - **`content-library`** — update shared/global site content (business info, hours, contact details) from client notes.
 - **`blog-workflow`** — draft, edit, publish, unpublish, and delete blog posts; enable a blog on a new site.
 - **`client-accounts`** — agency operations: create client accounts, grant/revoke site access, manage permissions, generate SSO/reset links.
+- **`vibe-projects`** — build and change Vibe projects (websites and apps) with Duda's AI agent: start a new conversation or continue an existing one, answer the agent's questions, read the project's code, view form submissions, and publish.
 
 ### Commands
 Explicit, user-invoked shortcuts.
@@ -29,11 +30,19 @@ Explicit, user-invoked shortcuts.
 - **`/duda:publish`** — publish or unpublish a site.
 - **`/duda:update-collection`** — add/update/review collection rows.
 - **`/duda:blog`** — draft or publish a blog post.
+- **`/duda:vibe-build`** — build a new Vibe project (website or app) from a description.
+- **`/duda:vibe-iterate`** — send a change to a Vibe project's agent, in a new or existing conversation, and share the result.
 
 ### MCP server
 Configured in `.mcp.json`:
 
 - **`duda`** — `https://mcp.duda.co/mcp` (Streamable HTTP, OAuth 2.0).
+
+## Credits & publishing
+
+- **Credits** — each message sent to a Vibe project's agent (`conversation_send_message`, used by `/duda:vibe-build` and `/duda:vibe-iterate`) spends AI credits from your Duda account.
+- **Publishing** — `publish_site` makes the latest changes live to visitors.
+- **Plan** — creating, publishing, and unpublishing projects need the Custom plan.
 
 ## Fast-follow skills
 
