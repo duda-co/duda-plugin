@@ -20,7 +20,7 @@ description: Use when the user wants to build, change, or understand a Duda Vibe
 ## Credits and plan
 
 - Each message sent with `conversation_send_message` spends AI credits from the user's Duda account.
-- Creating, publishing, and unpublishing projects need the Custom plan.
+- Creating, publishing, and unpublishing projects need the Custom plan. On other plans `create_or_generate_site`, `publish_site`, and `unpublish_site` are not offered. Chatting with an existing project's agent is not gated by this.
 
 ## Is it a Vibe project?
 
@@ -45,7 +45,7 @@ If `create_or_generate_site` is available:
 2. Call `create_or_generate_site` with `creation_method: 'vibe'` and, if the user gave one, a `default_domain_prefix`. Keep the returned `site_name`.
 3. Continue with **Build or change the project** to send the first brief.
 
-If it isn't, ask the user for an existing Vibe project to work in, then continue with **Build or change the project**.
+If it isn't, the account's plan doesn't allow creating projects. Tell the user that creating a Vibe project needs the Custom plan. They can create one in the Duda platform, or you can work in an existing Vibe project, then continue with **Build or change the project**.
 
 ### Build or change the project
 
@@ -78,4 +78,4 @@ If it isn't, ask the user for an existing Vibe project to work in, then continue
 
 If `publish_site` is available, confirm with the user, then `publish_site` (or `unpublish_site`). Publishing makes the project's latest changes live. The live address is `site_default_domain` in `get_site_details`. The `/duda:publish` command covers this too.
 
-If it isn't, give the user the editor link (`edit_site_url` from `get_site_details`) so they can publish from the Duda editor.
+If it isn't, the account's plan doesn't allow publishing. Tell the user that publishing needs the Custom plan, and don't try another route to publish. They can still keep building and share the preview link (`preview_site_url` from `get_site_details`).
