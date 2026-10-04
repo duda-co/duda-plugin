@@ -1,7 +1,7 @@
 {
   "name": "duda",
   "displayName": "Duda",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Build and manage Duda projects from Claude. Duda Editor sites: pages, navigation, popups, theme, collections, content library, blog, ecommerce, bookings, marketing, and URL rules. Vibe projects (websites and apps): build and change them with Duda's AI agent, view form submissions, and publish. Client accounts and site access work for both.",
   "author": {
     "name": "Duda"
