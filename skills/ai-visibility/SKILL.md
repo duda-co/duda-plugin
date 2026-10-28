@@ -69,6 +69,11 @@ The result carries a `status` and a `next` hint. Follow the hint:
 - `ACTIVATION_STALLED`: stop checking and tell the user setup did not finish.
 - A one-time report with `ready: false` is still running. `missing_models` names the engines that haven't answered yet.
 
+### When to ask first
+
+- **Always ask first** for changes that spend something the user can't get back: starting tracking or a one-time report (`create_aeo`) and a manual refresh. Also ask first for any change you suggest yourself.
+- **Act directly** on a reversible change the user explicitly asked for: adding the prompts or competitors they named, pausing tracking, or resuming it. A clear request is the yes.
+
 ### Start tracking or run a one-time report
 
 1. Call `create_aeo` **without** `create` first. It is a preview and creates nothing. It returns `would_create` and what it uses.
@@ -79,7 +84,7 @@ The result carries a `status` and a `next` hint. Follow the hint:
 
 ### Change tracking
 
-Read the status first with `get_aeo_report` `sections: ['status']`. Ask before each change.
+Read the status first with `get_aeo_report` `sections: ['status']`.
 
 - **Pause** (`manage_aeo_project`, `action: 'pause'`): stops tracking, keeps the data, frees the site slot.
 - **Resume** (`action: 'resume'`): uses 1 site slot.
@@ -89,7 +94,7 @@ Read the status first with `get_aeo_report` `sections: ['status']`. Ask before e
 
 - To see what is tracked: `get_aeo_prompts` (`view: 'list'`) and `get_aeo_competitors`.
 - To suggest new prompts: `get_aeo_prompts` with `view: 'suggestions'`, then let the user pick.
-- To add prompts: `update_aeo_prompts` with `action: 'add'`. Each one uses a prompt slot, so confirm the list first.
+- To add prompts: `update_aeo_prompts` with `action: 'add'`. Each one uses a prompt slot. Add the prompts the user named directly; confirm a list you suggested first.
 - To add a competitor: `update_aeo_competitors` with `action: 'add'`, the brand `name` and its `competitor_domain`. Ask for a missing domain; don't guess it.
 
 ### Improve visibility
