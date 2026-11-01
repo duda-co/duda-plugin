@@ -31,6 +31,7 @@ AI Visibility (also called AEO, answer engine optimization) measures how often A
 - Each added or restored **prompt** uses 1 prompt slot. Archiving a prompt frees its slot. Each **competitor** counts toward the plan's competitor limit.
 - Each added **AI engine** (model) or **extra country** (geo) uses a plan slot. A project tracks at most 5 **cities**.
 - A manual **refresh** uses 1 of the site's refreshes for this billing cycle. The account's refreshes are shared by all its sites. Talk about refreshes only, never chats.
+- `get_aeo_report` with `sections: ['usage']` shows how many manual refreshes are left and the prompt, engine and country slots used. Read it before you add prompts, engines or countries, so you can say what is left.
 - On a plan-limit error (`AeoSitesLimitExceeded`, `AeoReportsLimitExceeded`, `AeoModelsLimitExceeded`, `AeoPromptsLimitExceeded`), tell the user the plan has none left. Don't retry.
 
 ## Vocabulary
@@ -54,8 +55,8 @@ AI Visibility (also called AEO, answer engine optimization) measures how often A
    - More brands side by side: `detail: 'brands'`, or raise `brands`.
    - Per AI engine, or the sources the answers cite: `detail: 'full'`.
    - What to improve: `sections: ['recommendations']`.
-   - What an engine actually said for one prompt: `get_aeo_prompts` with `view: 'answers'` and that `prompt_id`.
-   - Another period: `from_date` and `to_date`. Month over month takes two calls, one per month.
+   - What an engine actually said for one prompt: `get_aeo_prompts` with `view: 'answers'` and that `prompt_id`. Its `page_stats` cover only the answers in that page, not the whole period; say so when you quote them. Add `detail: 'full'` for the answers, or `include_answer_text: true` for their full text.
+   - Another period: `from_date` and `to_date` (`YYYY-MM-DD`). Month over month takes two calls, one per month. A one-time report is read over the last 366 days by default, so an older report still loads.
 3. Lead the answer with one sentence (visibility, rank, top competitor), then up to three short points: what is strong, what is weak, one next step.
 4. Say "the prompts with the highest score" and "the prompts with the lowest score", not "best" and "worst". A score alone doesn't say that.
 5. If the result has `filters_not_applied`, don't present those sections as filtered. If it has `top_only: true`, say the prompt figures cover the top prompts only.
@@ -67,10 +68,12 @@ The result carries a `status` and a `next` hint. Follow the hint:
 - `duda_site: false`: the domain isn't a Duda site of this account. Offer a one-time report.
 - `NOT_STARTED`: the site has no AI Visibility yet. Ask the user to choose ongoing tracking (1 site slot) or a one-time report (1 report).
 - `ACTIVATION_STARTED`: setup takes about 3 to 4 minutes. Tell the user and check again in a later turn with `sections: ['status']`, not in a loop.
-- `ACTIVATION_COMPLETED` with no data: the first data run hasn't finished, or the filters match nothing.
+- `ACTIVATION_COMPLETED` with no data: the first data run hasn't finished, the dates are before tracking started, or the filters match nothing.
 - `DEACTIVATED`: tracking is paused and the data is kept. Offer to resume.
 - `ACTIVATION_STALLED`: stop checking and tell the user setup did not finish.
-- A one-time report with `ready: false` is still running. `missing_models` names the engines that haven't answered yet.
+- `UNKNOWN`: the status could not be read. Try again later.
+- A one-time report with `ready: false` has no data yet. Tell the user and check again in a later turn.
+- A one-time report with `missing_models` is ready. Show it, and say once, briefly, that a few answers from those engines are still coming in. Don't call the report incomplete.
 
 ### When to ask first
 
@@ -81,11 +84,11 @@ The result carries a `status` and a `next` hint. Follow the hint:
 
 ### Start tracking or run a one-time report
 
-1. Call `create_aeo` **without** `create` first. It is a preview and creates nothing. It returns `would_create` and what it uses.
+1. Call `create_aeo` **without** `create` first. It is a preview and creates nothing. It returns `would_create` and what it uses. If `would_create` is `null`, the site is already tracked or paused; tell the user the `reason` and follow `next`.
 2. Tell the user what will be created and what it uses, and ask. Call `create_aeo` again with `create: 'project'` or `create: 'one_time_report'` only after a clear yes.
-3. A project needs `country_code`, the site's main market. Ask if you don't know it.
+3. A project needs `country_code`, the site's main market. Ask if you don't know it. `brand_name`, `cities` and `competitors` work for a project too. `models` works for a one-time report only.
 4. For a one-time report, the preview may ask for a brand name, a city, the audience country and 2 to 3 competitors with their websites. Ask the user once, say why each helps, and skip what they already gave. If they say to just run it, run it with what you have.
-5. If the user asks for a one-time report, make a one-time report, even for a site that is already tracked.
+5. If the user asks for a one-time report, make a one-time report, even for a site that is already tracked. A one-time report by `site_name` needs a site with a custom domain; if it has none, ask the user for the domain to analyse.
 
 ### Change tracking
 
@@ -94,7 +97,7 @@ Read the status first with `get_aeo_report` `sections: ['status']`.
 - **Pause** (`manage_aeo_project`, `action: 'pause'`): stops tracking, keeps the data, frees the site slot.
 - **Resume** (`action: 'resume'`): uses 1 site slot.
 - **Refresh** (`action: 'refresh'`): read `get_aeo_report` `sections: ['usage']` first, tell the user how many refreshes are left, then ask.
-- **Never refresh after a brand name change.** A new brand name re-scores the data already collected, so the numbers update without a refresh. If mentions look missing because AI answers spell the brand differently ("2Fast" for "2 Fast Motorcycle Track Day"), suggest renaming the brand in the AI Visibility settings, not a refresh.
+- **Never refresh after a brand name change.** A new brand name re-scores the data already collected, so the numbers update without a refresh. If mentions look missing because AI answers spell the brand differently ("2Fast" for "2 Fast Motorcycle Track Day"), suggest renaming the brand in the AI Visibility dashboard, not a refresh. No tool can rename the site's own brand.
 
 ### Prompts and competitors
 
@@ -126,5 +129,5 @@ Read the status first with `get_aeo_report` `sections: ['status']`.
 
 ### Common flows
 
-- **Monthly client report:** `get_aeo_report` for last month and the month before (two calls with `from_date` and `to_date`), then compare visibility, rank and the top competitor. Add `sections: ['recommendations']` for next steps.
+- **Monthly client report:** `get_aeo_report` for last month and the month before (two calls with `from_date` and `to_date`), then compare visibility, rank and the top competitor. For next steps, make a separate call with `sections: ['recommendations']`. Adding it to a summary call replaces the summary.
 - **Prospect audit:** `create_aeo` preview for the prospect's domain, collect the report inputs once, create the one-time report after a yes, then read it with `get_aeo_report` and its `report_id` when it is ready.
