@@ -27,7 +27,7 @@ AI Visibility (also called AEO, answer engine optimization) measures how often A
 - **Tracking** a Duda site (a project) uses 1 site slot. Pausing frees the slot and keeps the data.
 - A **one-time report** uses 1 report from the plan. It works for any domain, on Duda or not.
 - Each added **prompt** uses 1 prompt slot. Each **competitor** counts toward the plan's competitor limit.
-- A manual **refresh** spends chats from the site and account budgets.
+- A manual **refresh** uses 1 of the site's refreshes for this billing cycle. The account's refreshes are shared by all its sites. Talk about refreshes only, never chats.
 - On a plan-limit error (`AeoSitesLimitExceeded`, `AeoReportsLimitExceeded`, `AeoModelsLimitExceeded`, `AeoPromptsLimitExceeded`), tell the user the plan has none left. Don't retry.
 
 ## Vocabulary
@@ -88,7 +88,8 @@ Read the status first with `get_aeo_report` `sections: ['status']`.
 
 - **Pause** (`manage_aeo_project`, `action: 'pause'`): stops tracking, keeps the data, frees the site slot.
 - **Resume** (`action: 'resume'`): uses 1 site slot.
-- **Refresh** (`action: 'refresh'`): read the cost first with `get_aeo_report` `sections: ['usage']`, tell the user the cost in chats, then ask.
+- **Refresh** (`action: 'refresh'`): read `get_aeo_report` `sections: ['usage']` first, tell the user how many refreshes are left, then ask.
+- **Never refresh after a brand name change.** A new brand name re-scores the data already collected, so the numbers update without a refresh. If mentions look missing because AI answers spell the brand differently ("2Fast" for "2 Fast Motorcycle Track Day"), suggest renaming the brand in the AI Visibility settings, not a refresh.
 
 ### Prompts and competitors
 
