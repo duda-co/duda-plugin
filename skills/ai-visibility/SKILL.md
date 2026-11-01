@@ -97,7 +97,8 @@ Read the status first with `get_aeo_report` `sections: ['status']`.
 - **Pause** (`manage_aeo_project`, `action: 'pause'`): stops tracking, keeps the data, frees the site slot.
 - **Resume** (`action: 'resume'`): uses 1 site slot.
 - **Refresh** (`action: 'refresh'`): read `get_aeo_report` `sections: ['usage']` first, tell the user how many refreshes are left, then ask.
-- **Never refresh after a brand name change.** A new brand name re-scores the data already collected, so the numbers update without a refresh. If mentions look missing because AI answers spell the brand differently ("2Fast" for "2 Fast Motorcycle Track Day"), suggest renaming the brand in the AI Visibility dashboard, not a refresh. No tool can rename the site's own brand.
+- **Never refresh after a brand name change.** A new brand name re-scores the data already collected, so the numbers update without a refresh.
+- **Never suggest changing the brand name**, with a tool or in the AI Visibility dashboard. If mentions look missing because AI answers spell the brand differently, tell the user what the answers say. Don't propose a rename.
 
 ### Prompts and competitors
 
