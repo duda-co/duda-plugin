@@ -44,7 +44,7 @@ Configured in `.mcp.json`:
 - **Credits** — each message sent to a Vibe project's agent (`conversation_send_message`, used by `/duda:vibe-build` and `/duda:vibe-iterate`) spends AI credits from your Duda account.
 - **Publishing** — `publish_site` makes the latest changes live to visitors.
 - **Plan** — creating, publishing, and unpublishing projects need the Custom plan.
-- **AI Visibility**: needs an AI Visibility plan. Tracking a site uses a site slot, a one-time report uses a report, and a manual refresh spends chats from the plan.
+- **AI Visibility**: needs an AI Visibility plan. Tracking a site uses a site slot, a one-time report uses a report, and a manual refresh uses one of the site's refreshes for the billing cycle.
 
 ## Fast-follow skills
 
