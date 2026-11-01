@@ -1,6 +1,6 @@
 ---
 name: ai-visibility
-description: Use when the user asks how often AI assistants (ChatGPT, Gemini, Google AI Overviews, Perplexity, Microsoft Copilot) mention a brand or website, how it ranks against competitors in AI answers, or how to improve that. Covers reading AI Visibility (AEO) reports for a Duda site or any domain, running a one-time report for a prospect or competitor, starting, pausing, resuming or refreshing ongoing tracking, and adding tracked prompts and competitors.
+description: Use when the user asks how often AI assistants (ChatGPT, Gemini, Google AI Overviews, Perplexity, Microsoft Copilot) mention a brand or website, how it ranks against competitors in AI answers, or how to improve that. Covers reading AI Visibility (AEO) reports for a Duda site or any domain, running a one-time report for a prospect or competitor, starting, pausing, resuming or refreshing ongoing tracking, adding or archiving tracked prompts, adding, renaming or removing competitors, and changing the tracked AI engines, countries and cities.
 ---
 
 # AI Visibility
@@ -15,18 +15,21 @@ AI Visibility (also called AEO, answer engine optimization) measures how often A
 - "Give me a monthly AI Visibility summary for [site]"
 - "Start tracking AI Visibility for [site]" / "Pause tracking" / "Refresh the data"
 - "Which questions should we track?" / "Add [competitor] to the comparison"
+- "Stop tracking that prompt" / "Remove [competitor]"
+- "Also track Perplexity" / "Add Canada" / "Track Round Rock too"
 - "How do we show up more in AI answers?"
 
 ## Tools
 
-`get_aeo_report` · `create_aeo` · `manage_aeo_project` · `get_aeo_prompts` · `update_aeo_prompts` · `get_aeo_competitors` · `update_aeo_competitors`
+`get_aeo_report` · `create_aeo` · `manage_aeo_project` · `get_aeo_prompts` · `update_aeo_prompts` · `get_aeo_competitors` · `update_aeo_competitors` · `get_aeo_settings` · `update_aeo_settings`
 
 ## Plan and usage
 
 - The account needs an AI Visibility plan. Without one, every tool fails with `AeoPlanNotFound`. Tell the user and don't retry.
 - **Tracking** a Duda site (a project) uses 1 site slot. Pausing frees the slot and keeps the data.
 - A **one-time report** uses 1 report from the plan. It works for any domain, on Duda or not.
-- Each added **prompt** uses 1 prompt slot. Each **competitor** counts toward the plan's competitor limit.
+- Each added or restored **prompt** uses 1 prompt slot. Archiving a prompt frees its slot. Each **competitor** counts toward the plan's competitor limit.
+- Each added **AI engine** (model) or **extra country** (geo) uses a plan slot. A project tracks at most 5 **cities**.
 - A manual **refresh** uses 1 of the site's refreshes for this billing cycle. The account's refreshes are shared by all its sites. Talk about refreshes only, never chats.
 - On a plan-limit error (`AeoSitesLimitExceeded`, `AeoReportsLimitExceeded`, `AeoModelsLimitExceeded`, `AeoPromptsLimitExceeded`), tell the user the plan has none left. Don't retry.
 
@@ -72,7 +75,9 @@ The result carries a `status` and a `next` hint. Follow the hint:
 ### When to ask first
 
 - **Always ask first** for changes that spend something the user can't get back: starting tracking or a one-time report (`create_aeo`) and a manual refresh. Also ask first for any change you suggest yourself.
-- **Act directly** on a reversible change the user explicitly asked for: adding the prompts or competitors they named, pausing tracking, or resuming it. A clear request is the yes.
+- **Always ask first** before removing a country (geo). It deletes that country's prompts for good.
+- **Act directly** on a reversible change the user explicitly asked for: adding, archiving or restoring the prompts they named, adding, renaming or removing the competitors they named, adding or removing AI engines and cities, adding a country, pausing tracking, or resuming it. A clear request is the yes.
+- If a write result has `not_applied` (or `failed` and `not_applied_parts`), tell the user which changes did not apply. Don't report them as done.
 
 ### Start tracking or run a one-time report
 
@@ -95,8 +100,23 @@ Read the status first with `get_aeo_report` `sections: ['status']`.
 
 - To see what is tracked: `get_aeo_prompts` (`view: 'list'`) and `get_aeo_competitors`.
 - To suggest new prompts: `get_aeo_prompts` with `view: 'suggestions'`, then let the user pick.
-- To add prompts: `update_aeo_prompts` with `action: 'add'`. Each one uses a prompt slot. Add the prompts the user named directly; confirm a list you suggested first.
+- To add prompts: `update_aeo_prompts` with `action: 'add'` and `prompts`. Each one uses a prompt slot. `country_code` is optional; the default is the project's main market. Add the prompts the user named directly; confirm a list you suggested first.
+- To stop tracking prompts: `update_aeo_prompts` with `action: 'archive'` and `prompt_ids` (up to 25). The data is kept and the slots are freed.
+- To track archived prompts again: `action: 'restore'` and `prompt_ids`. Find archived ids with `get_aeo_prompts` `view: 'list'` and `archived: true`. Each restored prompt uses a prompt slot.
 - To add a competitor: `update_aeo_competitors` with `action: 'add'`, the brand `name` and its `competitor_domain`. Ask for a missing domain; don't guess it.
+- To rename a competitor or change its domain: `action: 'update'`, its `brand_id` from `get_aeo_competitors`, and `name`, `competitor_domain` or both.
+- To stop comparing against a competitor: `action: 'remove'` and its `brand_id`. Its past data is kept. Content suggestions need at least one competitor with a domain, so say so before you remove the last one.
+- The site's own brand cannot be changed or removed with these tools.
+- A changed competitor returns a 409 error for about a minute. Wait, then try again in a later turn.
+
+### AI engines, countries and cities
+
+- To see them: `get_aeo_settings`. It returns `models` (AI engines), `geos` (extra countries) and `cities`. Use `parts` to read only some of them.
+- To change them: `update_aeo_settings` with `models`, `geos` or `cities`, each as `{ add: [...], remove: [...] }`. Values you don't list stay as they are.
+- AI engines: `CHAT_GPT`, `GEMINI`, `GOOGLE_AI_OVERVIEW`, `GOOGLE_AI_MODE`, `PERPLEXITY`, `MICROSOFT_COPILOT`. At least one must stay tracked. A new engine uses a plan slot and answers every tracked prompt.
+- Countries are 2-letter ISO codes, such as `CA`. A new country uses a plan slot and copies the prompts of the main market. Removing a country deletes its prompts for good, so ask first.
+- At most 5 cities. Remove some in the same call to add more.
+- The tool applies countries last. If one part fails, the result names it in `failed` and lists the parts it did not change in `not_applied_parts`.
 
 ### Improve visibility
 
