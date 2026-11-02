@@ -21,7 +21,7 @@ AI Visibility (also called AEO, answer engine optimization) measures how often A
 
 ## Tools
 
-`get_aeo_report` · `create_aeo` · `manage_aeo_project` · `get_aeo_prompts` · `update_aeo_prompts` · `get_aeo_competitors` · `update_aeo_competitors` · `get_aeo_settings` · `update_aeo_settings`
+`get_aeo_report` · `create_aeo` · `manage_aeo_project` · `get_aeo_prompts` · `update_aeo_prompts` · `archive_aeo_prompts` · `restore_aeo_prompts` · `get_aeo_competitors` · `update_aeo_competitors` · `edit_aeo_competitors` · `remove_aeo_competitors` · `get_aeo_settings` · `add_aeo_settings` · `remove_aeo_settings`
 
 ## Plan and usage
 
@@ -80,7 +80,7 @@ The result carries a `status` and a `next` hint. Follow the hint:
 - **Always ask first** for changes that spend something the user can't get back: starting tracking or a one-time report (`create_aeo`) and a manual refresh. Also ask first for any change you suggest yourself.
 - **Always ask first** before removing a country (geo). It deletes that country's prompts for good.
 - **Act directly** on a reversible change the user explicitly asked for: adding, archiving or restoring the prompts they named, adding, renaming or removing the competitors they named, adding or removing AI engines and cities, adding a country, pausing tracking, or resuming it. A clear request is the yes.
-- If a write result has `not_applied` (or `failed` and `not_applied_parts`), tell the user which changes did not apply. Don't report them as done.
+- If a write result has `not_applied` (or `failed` and `not_applied_settings`), tell the user which changes did not apply. Don't report them as done.
 
 ### Start tracking or run a one-time report
 
@@ -104,23 +104,23 @@ Read the status first with `get_aeo_report` `sections: ['status']`.
 
 - To see what is tracked: `get_aeo_prompts` (`view: 'list'`) and `get_aeo_competitors`.
 - To suggest new prompts: `get_aeo_prompts` with `view: 'suggestions'`, then let the user pick.
-- To add prompts: `update_aeo_prompts` with `action: 'add'` and `prompts`. Each one uses a prompt slot. `country_code` is optional; the default is the project's main market. Add the prompts the user named directly; confirm a list you suggested first.
-- To stop tracking prompts: `update_aeo_prompts` with `action: 'archive'` and `prompt_ids` (up to 25). The data is kept and the slots are freed.
-- To track archived prompts again: `action: 'restore'` and `prompt_ids`. Find archived ids with `get_aeo_prompts` `view: 'list'` and `archived: true`. Each restored prompt uses a prompt slot.
-- To add a competitor: `update_aeo_competitors` with `action: 'add'`, the brand `name` and its `competitor_domain`. Ask for a missing domain; don't guess it.
-- To rename a competitor or change its domain: `action: 'update'`, its `brand_id` from `get_aeo_competitors`, and `name`, `competitor_domain` or both.
-- To stop comparing against a competitor: `action: 'remove'` and its `brand_id`. Its past data is kept. Content suggestions need at least one competitor with a domain, so say so before you remove the last one.
+- To add prompts: `update_aeo_prompts` with `prompts`. Each one uses a prompt slot. `country_code` is optional; the default is the project's main market. Add the prompts the user named directly; confirm a list you suggested first.
+- To stop tracking prompts: `archive_aeo_prompts` with `prompt_ids` (up to 25). The data is kept and the slots are freed.
+- To track archived prompts again: `restore_aeo_prompts` with `prompt_ids`. Find archived ids with `get_aeo_prompts` `view: 'list'` and `archived: true`. Each restored prompt uses a prompt slot.
+- To add a competitor: `update_aeo_competitors` with the brand `name` and its `competitor_domain`. Ask for a missing domain; don't guess it.
+- To rename a competitor or change its domain: `edit_aeo_competitors` with its `brand_id` from `get_aeo_competitors`, and `name`, `competitor_domain` or both.
+- To stop comparing against a competitor: `remove_aeo_competitors` with its `brand_id`. Its past data is kept. Content suggestions need at least one competitor with a domain, so say so before you remove the last one.
 - The site's own brand cannot be changed or removed with these tools.
 - A changed competitor returns a 409 error for about a minute. Wait, then try again in a later turn.
 
 ### AI engines, countries and cities
 
-- To see them: `get_aeo_settings`. It returns `models` (AI engines), `geos` (extra countries) and `cities`. Use `parts` to read only some of them.
-- To change them: `update_aeo_settings` with `models`, `geos` or `cities`, each as `{ add: [...], remove: [...] }`. Values you don't list stay as they are.
+- To see them: `get_aeo_settings`. It returns `models` (AI engines), `geos` (extra countries) and `cities`.
+- To change them: `add_aeo_settings` or `remove_aeo_settings` with `models`, `geos` or `cities`, each a list such as `['PERPLEXITY']`. Values you don't list stay as they are. To swap an engine, add the new one first, then remove the old one.
 - AI engines: `CHAT_GPT`, `GEMINI`, `GOOGLE_AI_OVERVIEW`, `GOOGLE_AI_MODE`, `PERPLEXITY`, `MICROSOFT_COPILOT`. At least one must stay tracked. A new engine uses a plan slot and answers every tracked prompt.
 - Countries are 2-letter ISO codes, such as `CA`. A new country uses a plan slot and copies the prompts of the main market. Removing a country deletes its prompts for good, so ask first.
-- At most 5 cities. Remove some in the same call to add more.
-- The tool applies countries last. If one part fails, the result names it in `failed` and lists the parts it did not change in `not_applied_parts`.
+- At most 5 cities. To add more, remove some first.
+- The tools apply countries last. If a later change fails after an earlier one was saved, the result names it in `failed` and lists the settings it did not change in `not_applied_settings`.
 
 ### Improve visibility
 
