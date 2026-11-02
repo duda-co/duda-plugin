@@ -116,7 +116,7 @@ Read the status first with `get_aeo_report` `sections: ['status']`.
 ### AI engines, countries and cities
 
 - To see them: `get_aeo_settings`. It returns `models` (AI engines), `geos` (extra countries) and `cities`.
-- To change them: `add_aeo_settings` or `remove_aeo_settings` with `models`, `geos` or `cities`, each a list such as `['PERPLEXITY']`. Values you don't list stay as they are. To swap an engine, add the new one first, then remove the old one.
+- To change them: `add_aeo_settings` or `remove_aeo_settings` with `models`, `geos` or `cities`, each a list such as `['PERPLEXITY']`. Values you don't list stay as they are. To swap an engine, remove the old one first, then add the new one, so the plan's engine limit is not hit. If it is the only engine, add the new one first.
 - AI engines: `CHAT_GPT`, `GEMINI`, `GOOGLE_AI_OVERVIEW`, `GOOGLE_AI_MODE`, `PERPLEXITY`, `MICROSOFT_COPILOT`. At least one must stay tracked. A new engine uses a plan slot and answers every tracked prompt.
 - Countries are 2-letter ISO codes, such as `CA`. A new country uses a plan slot and copies the prompts of the main market. Removing a country deletes its prompts for good, so ask first.
 - At most 5 cities. To add more, remove some first.
