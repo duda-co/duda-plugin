@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/duda-co/duda-plugin/compare/duda-v0.2.0...duda-v0.2.1) (2026-11-05)
+
+
+### Bug fixes
+
+* make plugin icon valid and update directory listing metadata ([#13](https://github.com/duda-co/duda-plugin/issues/13)) ([09de0f8](https://github.com/duda-co/duda-plugin/commit/09de0f820be2139d25ca2486c540925eb8123d98))
+
 ## [0.2.0](https://github.com/duda-co/duda-plugin/compare/duda-v0.1.4...duda-v0.2.0) (2026-10-04)
 
 
