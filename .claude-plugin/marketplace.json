@@ -9,7 +9,7 @@
     {
       "name": "duda",
       "source": "./",
-      "description": "Build and manage Duda projects from Claude. Duda Editor sites: pages, navigation, popups, theme, collections, content library, blog, ecommerce, bookings, marketing, and URL rules. Vibe projects (websites and apps): build and change them with Duda's AI agent, view form submissions, and publish. Client accounts and site access work for both.",
+      "description": "Create Duda Editor websites and Vibe projects (sites and apps), manage blogs, ecommerce, bookings and collections, run marketing automation and AI search visibility (AEO), and handle client accounts and site access.",
       "category": "website-building"
     }
   ]
