@@ -2,7 +2,7 @@
   "name": "duda",
   "displayName": "Duda",
   "version": "0.2.0",
-  "description": "Build and manage Duda projects from Claude. Duda Editor sites: pages, navigation, popups, theme, collections, content library, blog, ecommerce, bookings, marketing, AI Visibility (AEO), and URL rules. Vibe projects (websites and apps): build and change them with Duda's AI agent, view form submissions, and publish. Client accounts and site access work for both.",
+  "description": "Create Duda Editor websites and Vibe projects (sites and apps), manage blogs, ecommerce, bookings and collections, run marketing automation and AI search visibility (AEO), and handle client accounts and site access.",
   "author": {
     "name": "Duda"
   },
@@ -14,6 +14,12 @@
     "website-builder",
     "cms",
     "agency",
-    "mcp"
-  ]
+    "mcp",
+    "vibe",
+    "ecommerce"
+  ],
+  "privacyPolicyUrl": "https://www.duda.co/legal/privacy",
+  "documentationUrl": "https://developer.duda.co/docs/dudas-mcp",
+  "supportUrl": "https://support.duda.co/hc/en-us",
+  "termsOfServiceUrl": "https://www.duda.co/legal/terms"
 }
