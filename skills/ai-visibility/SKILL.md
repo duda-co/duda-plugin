@@ -28,7 +28,7 @@ AI Visibility (also called AEO, answer engine optimization) measures how often A
 - The account needs an AI Visibility plan. Without one, every tool fails with `AeoPlanNotFound`. Tell the user and don't retry.
 - **Tracking** a Duda site (a project) uses 1 site slot. Pausing frees the slot and keeps the data.
 - A **one-time report** uses 1 report from the plan. It works for any domain, on Duda or not.
-- Each added or restored **prompt** uses 1 prompt slot. Archiving a prompt frees its slot. Each **competitor** counts toward the plan's competitor limit.
+- Each added or restored **prompt** uses 1 prompt slot. Archiving a prompt frees its slot. A project tracks at most 10 **competitors**.
 - Each added **AI engine** (model) or **extra country** (geo) uses a plan slot. A project tracks at most 5 **cities**.
 - A manual **refresh** uses 1 of the site's refreshes for this billing cycle. The account's refreshes are shared by all its sites. Talk about refreshes only, never chats.
 - `get_aeo_report` with `sections: ['usage']` shows how many manual refreshes are left and the prompt, engine and country slots used. Read it before you add prompts, engines or countries, so you can say what is left.
@@ -86,7 +86,7 @@ The result carries a `status` and a `next` hint. Follow the hint:
 
 1. Call `create_aeo` **without** `create` first. It is a preview and creates nothing. It returns `would_create` and what it uses. If `would_create` is `null`, the site is already tracked or paused; tell the user the `reason` and follow `next`.
 2. Tell the user what will be created and what it uses, and ask. Call `create_aeo` again with `create: 'project'` or `create: 'one_time_report'` only after a clear yes.
-3. A project needs `country_code`, the site's main market. Ask if you don't know it. `brand_name`, `cities` and `competitors` work for a project too. `models` works for a one-time report only.
+3. A project needs `country_code`, the site's main market. Ask if you don't know it. `brand_name`, `cities` and `competitors` (up to 5, each with its domain) work for a project too. `models` works for a one-time report only.
 4. For a one-time report, the preview may ask for a brand name, a city, the audience country and 2 to 3 competitors with their websites. Ask the user once, say why each helps, and skip what they already gave. If they say to just run it, run it with what you have.
 5. If the user asks for a one-time report, make a one-time report, even for a site that is already tracked. A one-time report by `site_name` needs a site with a custom domain; if it has none, ask the user for the domain to analyse.
 
@@ -97,6 +97,7 @@ Read the status first with `get_aeo_report` `sections: ['status']`.
 - **Pause** (`manage_aeo_project`, `action: 'pause'`): stops tracking, keeps the data, frees the site slot.
 - **Resume** (`action: 'resume'`): uses 1 site slot.
 - **Refresh** (`action: 'refresh'`): read `get_aeo_report` `sections: ['usage']` first, tell the user how many refreshes are left, then ask.
+- A change on a paused project is saved but takes effect only after tracking resumes. The result has `tracking: 'paused'`. Tell the user, and offer to resume.
 - **Never refresh after a brand name change.** A new brand name re-scores the data already collected, so the numbers update without a refresh.
 - **Never suggest changing the brand name**, with a tool or in the AI Visibility dashboard. If mentions look missing because AI answers spell the brand differently, tell the user what the answers say. Don't propose a rename.
 
@@ -107,7 +108,7 @@ Read the status first with `get_aeo_report` `sections: ['status']`.
 - To add prompts: `update_aeo_prompts` with `prompts`. Each one uses a prompt slot. `country_code` is optional; the default is the project's main market. Add the prompts the user named directly; confirm a list you suggested first.
 - To stop tracking prompts: `archive_aeo_prompts` with `prompt_ids` (up to 25). The data is kept and the slots are freed.
 - To track archived prompts again: `restore_aeo_prompts` with `prompt_ids`. Find archived ids with `get_aeo_prompts` `view: 'list'` and `archived: true`. Each restored prompt uses a prompt slot.
-- To add a competitor: `update_aeo_competitors` with the brand `name` and its `competitor_domain`. Ask for a missing domain; don't guess it.
+- To add a competitor: `update_aeo_competitors` with the brand `name` and its `competitor_domain`. Ask for a missing domain; don't guess it. At 10 competitors, ask the user which one to remove first.
 - To rename a competitor or change its domain: `edit_aeo_competitors` with its `brand_id` from `get_aeo_competitors`, and `name`, `competitor_domain` or both.
 - To stop comparing against a competitor: `remove_aeo_competitors` with its `brand_id`. Its past data is kept. Content suggestions need at least one competitor with a domain, so say so before you remove the last one.
 - The site's own brand cannot be changed or removed with these tools.
