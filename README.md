@@ -22,7 +22,7 @@ Loaded automatically when relevant to the conversation.
 - **`content-library`** — update shared/global site content (business info, hours, contact details) from client notes.
 - **`blog-workflow`** — draft, edit, publish, unpublish, and delete blog posts; enable a blog on a new site.
 - **`client-accounts`** — agency operations: create client accounts, grant/revoke site access, manage permissions, generate SSO/reset links.
-- **`vibe-projects`** — build and change Vibe projects (websites and apps) with Duda's AI agent: start a new conversation or continue an existing one, answer the agent's questions, read the project's code, view form submissions, and publish.
+- **`vibe-projects`** — build and change Vibe projects (websites and apps) with Duda's AI agent: start a new conversation or continue an existing one, answer the agent's questions, read the project's code, read and edit its data tables, view form submissions, and publish.
 
 ### Commands
 Explicit, user-invoked shortcuts.
