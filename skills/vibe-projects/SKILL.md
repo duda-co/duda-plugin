@@ -12,7 +12,7 @@ description: Use when the user wants to build, change, or understand a Duda Vibe
 - "Continue where we left off on [project]"
 - "How does the contact form on [project] work?" / "What pages does it have?"
 - "Show me the form submissions for [project]"
-- "What bookings came in on [project]?" / "Add these menu items to [project]'s table"
+- "What reviews came in on [project]?" / "Add these menu items to [project]'s table"
 
 ## Tools
 
@@ -69,7 +69,7 @@ If it isn't, the account's plan doesn't allow creating projects. Tell the user t
 
 ### Read and edit the project's data
 
-A Vibe project keeps its data (bookings, signups, menu items) in tables that its code reads. These tools work on the tables directly, without the agent and without spending credits.
+A Vibe project keeps its data (menu items, reviews, inventory) in tables that its code reads. These tools work on the tables directly, without the agent and without spending credits.
 
 1. `vibe_get_tables` lists the tables with their columns, types, and approximate row count (`total`), which can lag right after a write. Pass `table_name` for one table.
 2. `vibe_query_rows` reads a table's rows in `id` order, up to 100 per call. There is no filtering or sorting, so page with `offset` only as far as the question needs.
