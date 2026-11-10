@@ -71,9 +71,9 @@ If it isn't, the account's plan doesn't allow creating projects. Tell the user t
 
 A Vibe project keeps its data (bookings, signups, menu items) in tables that its code reads. These tools work on the tables directly, without the agent and without spending credits.
 
-1. `vibe_get_tables` lists the tables with their columns, types, and approximate row count (`total`). Pass `table_name` for one table.
+1. `vibe_get_tables` lists the tables with their columns, types, and approximate row count (`total`), which can lag right after a write. Pass `table_name` for one table.
 2. `vibe_query_rows` reads a table's rows in `id` order, up to 100 per call. There is no filtering or sorting, so page with `offset` only as far as the question needs.
-3. To change rows, check the columns with `vibe_get_tables`, then call `vibe_edit_rows`: `insert` or `delete` up to 100 rows per call, `update` one row per call. Writes reach the live site immediately. Confirm with the user before deleting rows or updating many; a deleted row can't be restored.
+3. To change rows, check the columns with `vibe_get_tables`, then call `vibe_edit_rows`: `insert` or `delete` up to 100 rows per call, `update` one row per call. Writes reach the live site immediately. Confirm with the user before deleting rows or updating many; a deleted row can't be restored. The delete response doesn't say which rows existed, so re-read with `vibe_query_rows` to confirm.
 4. `vibe_edit_tables` adds a table (`create_table`) or columns (`add_columns`). Tables and columns can't be renamed, retyped, or removed afterwards, and the site shows nothing new until its code uses them. When the user wants a feature rather than a table (e.g. "add a reviews section"), ask the project's agent instead (see **Build or change the project**); it writes the table and the code together.
 
 ### Conversation history
