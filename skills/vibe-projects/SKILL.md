@@ -1,6 +1,6 @@
 ---
 name: vibe-projects
-description: Use when the user wants to build, change, or understand a Duda Vibe project — a website or app built and edited by Duda's AI agent from prompts. Covers creating an empty Vibe project, starting a new conversation with the project's agent or continuing an existing one, answering the agent's questions, reading the project's code to explain how something works, viewing form submissions, and publishing.
+description: Use when the user wants to build, change, or understand a Duda Vibe project — a website or app built and edited by Duda's AI agent from prompts. Covers creating an empty Vibe project, starting a new conversation with the project's agent or continuing an existing one, answering the agent's questions, reading the project's code to explain how something works, reading and editing the project's data tables, viewing form submissions, and publishing.
 ---
 
 # Vibe projects
@@ -12,10 +12,11 @@ description: Use when the user wants to build, change, or understand a Duda Vibe
 - "Continue where we left off on [project]"
 - "How does the contact form on [project] work?" / "What pages does it have?"
 - "Show me the form submissions for [project]"
+- "What reviews came in on [project]?" / "Add these menu items to [project]'s table"
 
 ## Tools
 
-`create_or_generate_site` · `conversation_find` · `conversation_send_message` · `conversation_wait` · `conversation_get_messages` · `conversation_cancel` · `vibe_list_files` · `vibe_read_files` · `get_site_details` · `list_form_submissions` · `publish_site` · `unpublish_site`
+`create_or_generate_site` · `conversation_find` · `conversation_send_message` · `conversation_wait` · `conversation_get_messages` · `conversation_cancel` · `vibe_list_files` · `vibe_read_files` · `vibe_get_tables` · `vibe_query_rows` · `vibe_edit_tables` · `vibe_edit_rows` · `get_site_details` · `list_form_submissions` · `publish_site` · `unpublish_site`
 
 ## Credits and plan
 
@@ -65,6 +66,15 @@ If it isn't, the account's plan doesn't allow creating projects. Tell the user t
 1. `vibe_list_files` lists the project's source files. On large projects, narrow it with `path_prefixes` (e.g. `['src/routes', 'src/components/blocks']`).
 2. Read what you need with one `vibe_read_files` call (up to 20 paths).
 3. Answer from the code, naming the files.
+
+### Read and edit the project's data
+
+A Vibe project keeps its data (menu items, reviews) in tables that its code reads. These tools work on the tables directly, without the agent and without spending credits.
+
+1. `vibe_get_tables` lists the tables with their columns, types, and approximate row count (`total`), which can lag right after a write. Pass `table_name` for one table.
+2. `vibe_query_rows` reads a table's rows in `id` order, up to 100 per call. There is no filtering or sorting, so page with `offset` only as far as the question needs.
+3. To change rows, check the columns with `vibe_get_tables`, then call `vibe_edit_rows`: `insert` or `delete` up to 100 rows per call, `update` one row per call. Writes reach the live site immediately. Confirm with the user before deleting rows or updating many; a deleted row can't be restored. The delete response doesn't say which rows existed, so re-read with `vibe_query_rows` to confirm.
+4. `vibe_edit_tables` adds a table (`create_table`) or columns (`add_columns`). Tables and columns can't be renamed, retyped, or removed afterwards, and the site shows nothing new until its code uses them. When the user wants a feature rather than a table (e.g. "add a reviews section"), ask the project's agent instead (see **Build or change the project**); it writes the table and the code together.
 
 ### Conversation history
 
