@@ -69,7 +69,7 @@ If it isn't, the account's plan doesn't allow creating projects. Tell the user t
 
 ### Read and edit the project's data
 
-A Vibe project keeps its data (menu items, reviews, inventory) in tables that its code reads. These tools work on the tables directly, without the agent and without spending credits.
+A Vibe project keeps its data (menu items, reviews) in tables that its code reads. These tools work on the tables directly, without the agent and without spending credits.
 
 1. `vibe_get_tables` lists the tables with their columns, types, and approximate row count (`total`), which can lag right after a write. Pass `table_name` for one table.
 2. `vibe_query_rows` reads a table's rows in `id` order, up to 100 per call. There is no filtering or sorting, so page with `offset` only as far as the question needs.
