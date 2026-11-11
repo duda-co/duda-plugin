@@ -57,7 +57,7 @@ If it isn't, the account's plan doesn't allow creating projects. Tell the user t
 5. Call `conversation_wait`, passing the latest `cursor` when you have one. Each call waits up to about a minute; while the state is `in_progress`, call it again with the new `cursor`.
 6. When the state is `waiting_for_answer`, the agent is asking the user something. Show the user the `interaction_request` and send their reply with `conversation_send_message` on the same conversation:
    - `question` → `answers`, one per question, with `selected_label` copied verbatim from the request (or `selected_labels`, `other_text`, or `skipped: true`).
-   - `approval` or `credential` → `approved: true` or `false`.
+   - Any other request that asks for a yes or no (such as `approval`) → `approved: true` or `false`, as the user answered.
 7. When the state is `idle`, relay the agent's `last_message`. Share the preview link from `get_site_details` (`preview_site_url`) so the user can see the result.
 8. To stop a turn, call `conversation_cancel`, then `conversation_wait` until `idle`. Work already written to the project stays.
 
