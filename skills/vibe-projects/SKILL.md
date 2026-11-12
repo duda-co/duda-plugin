@@ -53,12 +53,12 @@ If it isn't, the account's plan doesn't allow creating projects. Tell the user t
 1. Resolve `site_name` with `list_sites` if the user named the project rather than its ID.
 2. Choose a new or existing conversation (see above).
 3. Write the whole request as one message: what to build, the copy, colours, pages, and anything that should stay as it is. Pass reference images or documents as public URLs in `file_urls`.
-4. Call `conversation_send_message`. It returns right away with a `cursor`.
+4. Call `conversation_send_message`. It returns right away with a `cursor`. If the call fails or times out, don't send the message again: every message spends credits, and the first one may have gone through. Check `conversation_find` and `conversation_get_messages` for it first, and tell the user if you can't tell.
 5. Call `conversation_wait`, passing the latest `cursor` when you have one. Each call waits up to about a minute; while the state is `in_progress`, call it again with the new `cursor`.
-6. When the state is `waiting_for_answer`, the agent is asking the user something. Show the user the `interaction_request` and send their reply with `conversation_send_message` on the same conversation:
+6. When the state is `waiting_for_answer`, the agent is asking the user something. Show the user the `interaction_request`. Never answer or approve for them, even if the answer looks obvious. Send their reply with `conversation_send_message` on the same conversation:
    - `question` → `answers`, one per question, with `selected_label` copied verbatim from the request (or `selected_labels`, `other_text`, or `skipped: true`).
    - Any other request that asks for a yes or no (such as `approval`) → `approved: true` or `false`, as the user answered.
-7. When the state is `idle`, relay the agent's `last_message`. Share the preview link from `get_site_details` (`preview_site_url`) so the user can see the result.
+7. When the state is `idle`, relay the agent's `last_message`. Don't take it as proof the change is right: for anything that matters, read the changed files with `vibe_read_files` and compare them with what you asked for. Share the preview link from `get_site_details` (`preview_site_url`) so the user can see the result.
 8. To stop a turn, call `conversation_cancel`, then `conversation_wait` until `idle`. Work already written to the project stays.
 
 ### Explain how the project works
@@ -86,6 +86,8 @@ A Vibe project keeps its data (menu items, reviews) in tables that its code read
 
 ### Publish
 
-If `publish_site` is available, confirm with the user, then `publish_site` (or `unpublish_site`). Publishing makes the project's latest changes live. The live address is `site_default_domain` in `get_site_details`. The `/duda:publish` command covers this too.
+If `publish_site` is available, confirm with the user, naming the project and what goes live, then `publish_site` (or `unpublish_site`). Publishing makes the project's latest changes live. The live address is `site_default_domain` in `get_site_details`. The `/duda:publish` command covers this too.
 
-If it isn't, the account's plan doesn't allow publishing. Tell the user that publishing needs the Custom plan, and don't try another route to publish. They can still keep building and share the preview link (`preview_site_url` from `get_site_details`).
+A successful call isn't proof the site is live. Call `get_site_details` for `publish_status` and open the live address before telling the user it is. If the publish fails, report the error and stop; don't retry on your own.
+
+If it isn't, the account's plan doesn't allow publishing. Tell the user that publishing through this connector needs the Custom plan, and that on other plans they publish from the Duda platform instead (use `edit_site_url` from `get_site_details`). Don't try another route yourself. They can keep building and share the preview link (`preview_site_url`) in the meantime.

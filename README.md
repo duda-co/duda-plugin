@@ -44,7 +44,7 @@ To use another Duda environment (staging, test), add that environment's MCP serv
 
 - **Credits** — each message sent to a Vibe project's agent (`conversation_send_message`, used by `/duda:vibe-build` and `/duda:vibe-iterate`) spends AI credits from your Duda account.
 - **Publishing** — `publish_site` makes the latest changes live to visitors.
-- **Plan** — creating, publishing, and unpublishing projects need the Custom plan.
+- **Plan** — creating, publishing, and unpublishing projects through the connector need the Custom plan. On other plans, create and publish from the Duda platform.
 
 ## Fast-follow skills
 
