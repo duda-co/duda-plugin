@@ -1,6 +1,6 @@
 ---
 name: qa-vibe-project
-description: Use when the user wants to preview, check, or QA a Duda Vibe website (a project where `get_site_details` shows `editor: VIBE`) — "show me the preview", "QA my Vibe site", "check it on mobile", "test the contact form", "is it ready to publish?", "review it before I send it to my client". For Editor sites use `qa-editor-site`. Don't use this skill for apps or tools where all of the content is gated behind a login.
+description: Use when the user wants to check or QA a Duda Vibe website (a project where `get_site_details` shows `editor: VIBE`) — "QA my Vibe site", "check it on mobile", "test the contact form", "is it ready to publish?", "review it before I send it to my client". For Editor sites use `qa-editor-site`. Don't use this skill for apps or tools where all of the content is gated behind a login.
 ---
 
 # QA a Vibe project
