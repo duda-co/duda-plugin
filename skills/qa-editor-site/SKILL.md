@@ -1,6 +1,6 @@
 ---
 name: qa-editor-site
-description: Use when the user wants to preview, check, or QA a Duda Editor site (not a Vibe project) — "show me the preview", "give me the editor link", "QA my site", "check it on mobile", "test the contact form", "is it ready to publish?", "review it before I send it to my client". For Vibe projects use `qa-vibe-project`.
+description: Use when the user wants to check or QA a Duda Editor site (not a Vibe project) — "QA my site", "check it on mobile", "test the contact form", "is it ready to publish?", "review it before I send it to my client". For Vibe projects use `qa-vibe-project`.
 ---
 
 # QA an Editor site
