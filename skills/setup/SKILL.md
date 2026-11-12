@@ -21,3 +21,7 @@ description: Guides connecting the Duda connector to Claude if it isn't already 
 3. Once they confirm they've connected, retry `list_sites` (`mode: 'count'`) to verify.
 4. Call `list_sites` (default preview fields) so the user can see their site names. Site identifiers (`site_name`) are required by nearly every other Duda tool — the other skills in this plugin will ask you to resolve one via `list_sites` if the user hasn't already named a site.
 5. If the user manages sites for clients rather than directly, mention `list_client_sites` as the equivalent entry point for client-scoped access.
+
+## Other environments
+
+The plugin connects to Duda's main server. If the user works against a different Duda environment (for example a staging or test one), they add that environment's MCP server URL as an extra connector, or replace the `duda` entry in their project's `.mcp.json`. The skills work the same on any of them, but the tools may carry a different prefix, and site names and IDs are specific to each environment. Check which server a call goes to before changing or publishing anything.

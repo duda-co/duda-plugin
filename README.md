@@ -40,6 +40,8 @@ Configured in `.mcp.json`:
 
 To use another Duda environment (staging, test), add that environment's MCP server URL as an extra connector, or replace the URL in your project's `.mcp.json`. Site names and IDs are specific to each environment.
 
+To use another Duda environment (staging, test), add that environment's MCP server URL as an extra connector, or replace the URL in your project's `.mcp.json`. Site names and IDs are specific to each environment.
+
 ## Credits & publishing
 
 - **Credits** — each message sent to a Vibe project's agent (`conversation_send_message`, used by `/duda:vibe-build` and `/duda:vibe-iterate`) spends AI credits from your Duda account.
