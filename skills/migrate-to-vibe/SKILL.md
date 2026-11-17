@@ -18,7 +18,7 @@ First read the old site's `/sitemap.xml` (read only), so your questions can name
    A contact form is separate and cheap: it can be rebuilt as part of its page. Ask where submissions should go.
 4. **Look.** Same as the old site, or a fresh design with the same content?
 
-Tell the user that creating and publishing a Vibe project through this connector need the Custom plan (on other plans they create and publish from the Duda platform), and that every message to the agent spends AI credits, so you'll build one page at a time and batch fixes.
+Tell the user that publishing a Vibe project through this connector needs the Custom plan (on other plans they publish from the Duda platform), and that every message to the agent spends AI credits, so you'll build one page at a time and batch fixes.
 
 ## Instructions
 
