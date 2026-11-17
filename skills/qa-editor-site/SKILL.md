@@ -30,12 +30,23 @@ Use `list_pages` for the page list (path, title, description, draft status). Ope
 2. **Content.** No leftover placeholder text, typos, or wrong names, phone numbers, addresses. `get_page_elements` reads a page's text.
 3. **Links.** Every menu item and button goes to the right place. The logo goes home.
 4. **Images.** All load, none stretched or blurry.
-5. **Forms.** Submitting the test entry is part of the QA request, so don't ask first. Submit one entry only, marked "TEST - please ignore", confirm the success message, then check it arrived with `list_form_submissions`. Tell the user to delete the test entry.
-6. **Accessibility.** Text is easy to read against its background (contrast at least 4.5:1). Every image has alt text (`get_page_elements`). One H1 per page, headings in order. Tab through the page: every link, button and field can be reached and shows a visible outline. Form fields have labels. This is a quick pass, not a full accessibility audit, so don't call the site compliant.
-7. **Search and sharing.** Every page has its own title and description (`list_pages`). Pages meant to be hidden are set to draft, not live. If the site is already published, on the live domain `/sitemap.xml` and `/robots.txt` load, a made-up address shows a proper 404 page, and the share image and title are set. Business name, address and phone are written as text, not only inside an image, so search and AI answers can quote them.
+5. **Forms.** Each form asks for the right things (no missing or unneeded fields), fields have clear labels, and the success message reads the way the user wants a visitor to see it. Ask the user where form emails should go and check it matches. Duda handles delivery, so don't submit test entries unless the user asks. If they do, submit one entry marked "TEST - please ignore", then check it with `list_form_submissions` and tell the user to delete it.
+6. **Readability.** Text is easy to read against its background (contrast at least 4.5:1, or 3:1 for large text). To measure it, run the contrast snippet below in the browser on each page. Every image has alt text (`get_page_elements`). One H1 per page, headings in order. This is a quick pass, not a full accessibility audit, so don't call the site compliant.
+7. **Search and sharing.** Every page has its own title and description (`list_pages`), written for people and specific to the page. Pages meant to be hidden are set to draft, not live. The share image and title are set. Business name, address and phone are written as text, not only inside an image, so search and AI answers can quote them.
+
+### Contrast snippet
+
+Run this in the browser on a page. It lists text that fails, with its contrast ratio. It can't see text over images or gradients, so check those by eye.
+
+```js
+const rgb=c=>c.match(/[\d.]+/g).map(Number);
+const lum=([r,g,b])=>[r,g,b].reduce((a,v,i)=>a+[.2126,.7152,.0722][i]*((v/=255)<=.03928?v/12.92:((v+.055)/1.055)**2.4),0);
+const bgOf=e=>{for(;e;e=e.parentElement){const c=rgb(getComputedStyle(e).backgroundColor);if(c[3]!==0)return c}return[255,255,255]};
+[...document.querySelectorAll('body *')].filter(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim())).map(e=>{const s=getComputedStyle(e),[a,b]=[lum(rgb(s.color)),lum(bgOf(e))].sort((x,y)=>y-x),big=parseFloat(s.fontSize)>=24||(parseFloat(s.fontSize)>=18.66&&+s.fontWeight>=700);return{text:e.textContent.trim().slice(0,40),ratio:+((a+.05)/(b+.05)).toFixed(2),need:big?3:4.5}}).filter(r=>r.ratio<r.need)
+```
 
 ## Report
 
-One short list: what passed, what needs fixing (page, width, problem), and what you couldn't check. Sort the fixes into must fix before launch (broken forms or links, missing content, anything unreadable), should fix, and nice to have. Don't fix anything unless asked.
+One short list: what passed, what needs fixing (page, width, problem), and what you couldn't check. Sort the fixes into must fix before launch (broken links, missing content, anything unreadable), should fix, and nice to have. Don't fix anything unless asked.
 
 To fix, use the site-editing tools (`update_elements`, `update_page_settings`, and the like). Call `get_element_schema` first for the element types you will change, since the allowed properties differ by type. Then fetch a fresh preview link. There's no credit cost.
