@@ -75,7 +75,18 @@ Send all fixes for a page in one message, with exact values (hex colors, font na
 3. Business name, contact details and opening hours match the old site exactly.
 4. Files people download (PDFs, price lists, brochures) move too. Find them in the old pages' links, give them the same kind of mapping and redirect as pages, and pass them to the agent in `file_urls` with the images. Check each one opens from the new site. If one can't be copied, ask the user for the file.
 
-### 7. Hand over
+### 7. Check the whole site
+
+Once every page is built, check the site as a whole, using the URL table from step 3:
+
+- Every page in the table exists in the project (`vibe_list_files`) and opens at its new path on the preview.
+- Every page is reachable from the navigation or a link, and nothing links to a page that doesn't exist.
+- Internal links point at the new paths, not the old site.
+- The contact form sends, and the submission shows up in `list_form_submissions`. `qa-vibe-project` covers the form test.
+
+Send anything missing back to the agent in one message, then check again. List whatever you can't fix for the user.
+
+### 8. Hand over
 
 Use the `qa-vibe-project` skill for the preview and editor links and the first check. Then give the user:
 
