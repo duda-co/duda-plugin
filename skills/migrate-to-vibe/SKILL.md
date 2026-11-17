@@ -54,7 +54,7 @@ Follow `vibe-projects` to create the project (or use an existing Vibe project if
 
 ### 5. Check against the old site
 
-After each page, compare it with the original, side by side if you can open both. Use `vibe_read_files` if you need to see what the agent wrote. Look for:
+The project is created empty at the start, and the agent writes pages into it one message at a time. A page that comes out wrong doesn't make anything fail; it is just a draft that needs another message, and nothing is live until the user publishes. This check is the validation, so run it after every page. Compare the page with the original, side by side if you can open both. Use `vibe_read_files` if you need to see what the agent wrote. Look for:
 
 - Missing, reworded or misspelled text
 - Missing images or sections, wrong order
