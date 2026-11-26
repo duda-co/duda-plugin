@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.4.0](https://github.com/duda-co/duda-plugin/compare/duda-v0.3.0...duda-v0.4.0) (2026-11-26)
+
+
+### Features
+
+* add qa-vibe-project skill ([#23](https://github.com/duda-co/duda-plugin/issues/23)) ([e31e88d](https://github.com/duda-co/duda-plugin/commit/e31e88dad8f84a17d07e293b3203d1c6c254778e))
+* let users pick the Duda region (US or EU) ([643360a](https://github.com/duda-co/duda-plugin/commit/643360a65d0d0813d7fe41526fbd840099306472))
+
+
+### Bug fixes
+
+* add safeguards to vibe-projects ([#26](https://github.com/duda-co/duda-plugin/issues/26)) ([f1ae063](https://github.com/duda-co/duda-plugin/commit/f1ae06344a7833bbe667b9a225a2f999d5461231))
+
+
+### Documentation
+
+* name both plugin ids for /plugin configure ([561f6e2](https://github.com/duda-co/duda-plugin/commit/561f6e2a5d7a1b0024efd4838ef8cede0e6f0a39))
+
 ## [0.3.0](https://github.com/duda-co/duda-plugin/compare/duda-v0.2.0...duda-v0.3.0) (2026-11-12)
 
 
