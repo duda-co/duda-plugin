@@ -17,7 +17,7 @@ description: Guides connecting the Duda connector to Claude if it isn't already 
 2. If it fails with an auth/connection error, tell the user the Duda connector needs to be authorized:
    - **claude.ai**: Settings → Connectors → Duda → Connect, then sign in with their Duda partner account.
    - **Claude Code / other non-browser clients**: run `/mcp` (or the client's connector-auth flow) and follow the prompt.
-   - **Claude Code, account in Duda's EU region**: the plugin connects to the US server unless the user picked EU. If sign-in fails or their sites are missing, have them run `/plugin configure duda@duda`, pick `https://mcp.eu.duda.co/mcp`, restart Claude Code, and run `/mcp` again.
+   - **Claude Code, account in Duda's EU region**: the plugin connects to the US server unless the user picked EU. If sign-in fails or their sites are missing, have them run `/plugin configure` with the plugin's id (`duda@duda`, or `duda@claude-plugins-community` when installed from the community directory), pick `https://mcp.eu.duda.co/mcp`, restart Claude Code, and run `/mcp` again.
    - This session cannot complete the OAuth flow on the user's behalf — do not ask them for tokens or callback URLs.
 3. Once they confirm they've connected, retry `list_sites` (`mode: 'count'`) to verify.
 4. Call `list_sites` (default preview fields) so the user can see their site names. Site identifiers (`site_name`) are required by nearly every other Duda tool — the other skills in this plugin will ask you to resolve one via `list_sites` if the user hasn't already named a site.

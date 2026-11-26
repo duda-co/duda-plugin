@@ -41,7 +41,7 @@ Configured in `.mcp.json`:
   - `https://mcp.duda.co/mcp` — US (default)
   - `https://mcp.eu.duda.co/mcp` — EU
 
-Pick the region of your Duda account when you install the plugin. Change it later with `/plugin configure duda@duda` (or in `/config`), then restart Claude Code and sign in again with `/mcp`. Needs Claude Code v2.1.271 or later.
+Pick the region of your Duda account when you install the plugin. Change it later with `/plugin configure duda@duda` (`duda@claude-plugins-community` if you installed from the community directory) or in `/config`, then restart Claude Code and sign in again with `/mcp`. Needs Claude Code v2.1.271 or later.
 
 To use another Duda environment (staging, test), add that environment's MCP server URL as an extra connector, or replace the URL in your project's `.mcp.json`. Site names and IDs are specific to each environment.
 
