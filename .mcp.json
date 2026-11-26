@@ -2,7 +2,7 @@
   "mcpServers": {
     "duda": {
       "type": "http",
-      "url": "https://mcp.duda.co/mcp"
+      "url": "${user_config.server_url}"
     }
   }
 }
