@@ -21,5 +21,17 @@
   "privacyPolicyUrl": "https://www.duda.co/legal/privacy",
   "documentationUrl": "https://developer.duda.co/docs/dudas-mcp",
   "supportUrl": "https://support.duda.co/hc/en-us",
-  "termsOfServiceUrl": "https://www.duda.co/legal/terms"
+  "termsOfServiceUrl": "https://www.duda.co/legal/terms",
+  "userConfig": {
+    "server_url": {
+      "type": "string",
+      "title": "Duda region",
+      "description": "Duda MCP server for your account's region. US accounts use mcp.duda.co, EU accounts use mcp.eu.duda.co.",
+      "options": [
+        "https://mcp.duda.co/mcp",
+        "https://mcp.eu.duda.co/mcp"
+      ],
+      "default": "https://mcp.duda.co/mcp"
+    }
+  }
 }
